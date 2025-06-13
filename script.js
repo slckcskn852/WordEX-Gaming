@@ -1,6 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Prevent multiple initializations
+    if (window.wordexGameInitialized) {
+        return;
+    }
+    window.wordexGameInitialized = true;
+    
     const gameBoard = document.getElementById('game-board');
-    const keyboardContainer = document.getElementById('keyboard-container');    const messageArea = document.getElementById('message-area');        // Word lists will be loaded from JSON files
+    const keyboardContainer = document.getElementById('keyboard-container');
+    const messageArea = document.getElementById('message-area');// Word lists will be loaded from JSON files
     let soulsWordList = [];
     let finalFantasyWordList = [];
     let validGuesses = [];
@@ -37,6 +44,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentCol = 0;
     let guesses = Array(ROWS).fill(null).map(() => Array(COLS).fill(''));
     let boardCells = [];    async function initializeGame() {
+        // Ensure DOM elements exist
+        if (!gameBoard || !keyboardContainer || !messageArea) {
+            console.error('Required DOM elements not found');
+            return;
+        }
+        
         // Load words from JSON file if not already loaded
         if (validGuesses.length === 0) {
             await loadWords();
@@ -56,11 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.key').forEach(key => {
             key.classList.remove('correct', 'present', 'absent');
         });
-    }
-
-    function createBoard() {
+    }function createBoard() {
+        // Clear any existing board content
         gameBoard.innerHTML = '';
+        gameBoard.style.display = 'grid'; // Ensure proper display
         boardCells = [];
+        
         for (let i = 0; i < ROWS; i++) {
             const rowEl = document.createElement('div');
             rowEl.classList.add('row');
@@ -85,7 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }    function createKeyboard() {
+        // Clear any existing keyboard content
         keyboardContainer.innerHTML = '';
+        keyboardContainer.style.display = 'flex'; // Ensure proper display
+        keyboardContainer.style.flexDirection = 'column';
+        
         const keysLayout = [
             ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P'],
             ['A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L'],
@@ -285,14 +303,29 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Start a new game with the new genre
         initializeGame();
+    }    // Add event listeners for genre buttons (with safeguards)
+    const soulsBtn = document.getElementById('souls-btn');
+    const ffBtn = document.getElementById('ff-btn');
+    
+    if (soulsBtn && ffBtn) {
+        soulsBtn.addEventListener('click', () => {
+            if (currentGenre !== 'souls') {
+                switchGenre('souls');
+            }
+        });
+        
+        ffBtn.addEventListener('click', () => {
+            if (currentGenre !== 'ff') {
+                switchGenre('ff');
+            }
+        });
     }
-
-    // Add event listeners for genre buttons
-    document.getElementById('souls-btn').addEventListener('click', () => switchGenre('souls'));
-    document.getElementById('ff-btn').addEventListener('click', () => switchGenre('ff'));
 
     // Start the game
     initializeGame();
+    
+    // Debug: Log initialization
+    console.log('WordEX Game initialized successfully');
 
     function shakeCurrentRow() {
         const currentRowElement = boardCells[currentRow];
