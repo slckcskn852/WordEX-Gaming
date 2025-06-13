@@ -33,15 +33,19 @@
     
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <header>
+<body>    <header>
         <h1>WordEX</h1>
+        <button id="history-toggle" class="history-toggle-btn" aria-label="Toggle Game History">
+            📊
+        </button>
     </header>    <main>
-        <!-- Game History Sidebar -->
-        <div id="history-sidebar">
-            <h3>Game History</h3>
-            <div id="history-container">
-                <!-- Game snapshots will be added here -->
+        <!-- Toggleable Game History Sidebar -->
+        <div id="history-sidebar" class="history-sidebar-overlay">
+            <div class="history-sidebar-content">
+                <h3>Game History</h3>
+                <div id="history-container">
+                    <!-- Game snapshots will be added here -->
+                </div>
             </div>
         </div>
         

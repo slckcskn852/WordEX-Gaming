@@ -3,11 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.wordexGameInitialized) {
         return;
     }
-    window.wordexGameInitialized = true;
-      const gameBoard = document.getElementById('game-board');
+    window.wordexGameInitialized = true;    const gameBoard = document.getElementById('game-board');
     const keyboardContainer = document.getElementById('keyboard-container');
     const messageArea = document.getElementById('message-area');
     const historyContainer = document.getElementById('history-container');
+    const historySidebar = document.getElementById('history-sidebar');
+    const historyToggleBtn = document.getElementById('history-toggle');
     
     // Word lists will be loaded from JSON files
     let soulsWordList = [];
@@ -466,4 +467,38 @@ document.addEventListener('DOMContentLoaded', () => {
             historyContainer.appendChild(snapshotEl);
         });
     }
+    
+    // History Sidebar Toggle Functions
+    function toggleHistorySidebar() {
+        historySidebar.classList.toggle('open');
+    }
+    
+    function closeHistorySidebar() {
+        historySidebar.classList.remove('open');
+    }
+    
+    // History toggle button event listener
+    if (historyToggleBtn) {
+        historyToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleHistorySidebar();
+        });
+    }
+    
+    // Close sidebar when clicking outside
+    document.addEventListener('click', (e) => {
+        if (historySidebar.classList.contains('open')) {
+            const sidebarContent = document.querySelector('.history-sidebar-content');
+            if (sidebarContent && !sidebarContent.contains(e.target) && e.target !== historyToggleBtn) {
+                closeHistorySidebar();
+            }
+        }
+    });
+    
+    // Close sidebar on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && historySidebar.classList.contains('open')) {
+            closeHistorySidebar();
+        }
+    });
 });

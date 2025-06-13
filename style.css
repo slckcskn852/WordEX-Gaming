@@ -1,28 +1,68 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    min-height: 100vh;
+    height: 100vh;
     margin: 0;
+    padding: 0;
     background-color: #f0f2f5; /* Softer background */
     color: #1c1c1e; /* Darker text for better contrast */
+    overflow: hidden; /* Prevent all page scrolling */
+    width: 100vw;
+    box-sizing: border-box;
 }
 
 header {
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 20px 0;
+    align-items: center;
+    padding: 15px 0;
     position: relative;
     z-index: 10;
+    flex-shrink: 0;
 }
 
 header h1 {
     color: #1c1c1e;
     margin: 0;
     font-weight: 600; /* Slightly bolder */
+}
+
+.history-toggle-btn {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    background-color: #007aff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    z-index: 1001;
+}
+
+.history-toggle-btn:hover {
+    background-color: #0056b3;
+}
+
+.history-toggle-btn:active {
+    transform: translateY(-50%) scale(0.95);
 }
 
 #game-board {
@@ -251,75 +291,98 @@ header h1 {
     border-color: #0056cc;
 }
 
-/* Main layout with sidebar */
+/* Main layout */
 main {
     display: flex;
     width: 100%;
-    height: calc(100vh - 80px); /* Account for header height */
+    height: calc(100vh - 120px); /* Account for header and footer */
     max-width: 1400px;
-    gap: 20px;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     padding: 0 20px;
     position: relative;
+    overflow: hidden; /* Prevent any overflow */
+    box-sizing: border-box;
+    flex-shrink: 0;
 }
 
-/* History Sidebar */
-#history-sidebar {
-    width: 180px;
-    min-width: 180px;
-    background-color: #ffffff;
-    border: 2px solid #d1d5db;
-    border-radius: 12px;
-    padding: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    height: calc(100vh - 140px);
+/* Toggleable History Sidebar */
+.history-sidebar-overlay {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: 350px;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    transition: right 0.3s ease;
+    overflow: hidden; /* Prevent overlay from causing scroll */
+}
+
+.history-sidebar-overlay.open {
+    right: 0;
+}
+
+.history-sidebar-content {
     position: absolute;
-    left: 20px;
-    top: 20px;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    background-color: #ffffff;
+    border-left: 2px solid #d1d5db;
+    box-shadow: -4px 0 12px rgba(0,0,0,0.15);
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden; /* Prevent content from overflowing */
+    display: flex;
+    flex-direction: column;
 }
 
-#history-sidebar h3 {
-    margin: 0 0 12px 0;
-    font-size: 14px;
+.history-sidebar-content h3 {
+    margin: 0 0 20px 0;
+    font-size: 18px;
     font-weight: 600;
     color: #1c1c1e;
     text-align: center;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e5e7eb;
+    flex-shrink: 0;
 }
 
 #history-container {
-    overflow-y: auto;
-    height: calc(100% - 40px);
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 15px;
+    flex: 1;
+    overflow-y: auto; /* Only this container scrolls */
+    overflow-x: hidden;
+    padding-right: 5px; /* Space for scrollbar */
 }
 
 /* Game snapshot styles */
 .game-snapshot {
     background-color: #f9fafb;
     border: 1px solid #e5e7eb;
-    border-radius: 6px;
-    padding: 8px;
-    font-size: 9px;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 11px;
 }
 
 .snapshot-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 6px;
-    font-size: 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
     color: #6b7280;
 }
 
 .snapshot-genre {
     font-weight: 600;
-    padding: 1px 4px;
-    border-radius: 3px;
-    font-size: 8px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 10px;
 }
 
 .snapshot-genre.souls {
@@ -334,7 +397,7 @@ main {
 
 .snapshot-result {
     font-weight: 600;
-    font-size: 8px;
+    font-size: 10px;
 }
 
 .snapshot-result.won {
@@ -364,10 +427,10 @@ main {
 }
 
 .snapshot-cell {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     border: 1px solid #d1d5db;
-    border-radius: 2px;
+    border-radius: 3px;
     background-color: #ffffff;
     display: flex;
     align-items: center;
@@ -406,11 +469,8 @@ main {
     min-width: 0;
     padding: 20px;
     margin: 0 auto;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: auto;
+    width: 100%;
+    max-width: 600px;
 }
 
 /* Responsive Design - Mobile First */
@@ -428,23 +488,23 @@ main {
     }
     
     #game-board {
-        padding: 10px;
-        gap: 3px;
+        padding: 12px;
         margin-bottom: 15px;
     }
     
     .row {
-        grid-template-columns: repeat(5, 40px);
-        gap: 3px;
+        grid-template-columns: repeat(5, 45px);
+        gap: 4px;
     }
     
     .cell {
-        width: 40px;
-        height: 40px;
-        font-size: 18px;
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
         border-radius: 6px;
     }
-      #message-area {
+    
+    #message-area {
         font-size: 16px;
         margin-bottom: 15px;
         min-height: 24px;
@@ -461,29 +521,26 @@ main {
         font-size: 14px;
         min-width: 100px;
     }
-    
-    #keyboard-container {
-        padding: 10px;
-        gap: 4px;
-        margin-bottom: 15px;
-        max-width: 90vw;
+      #keyboard-container {
+        padding: 12px;
+        gap: 6px;
+        margin-bottom: 0px;
     }
     
     .keyboard-row {
-        gap: 2px;
+        gap: 4px;
     }
     
     .key {
-        height: 40px;
+        height: 45px;
         font-size: 14px;
         min-width: 28px;
-        padding: 0 8px;
-        border-radius: 4px;
+        border-radius: 6px;
     }
     
     .key.special {
-        font-size: 10px;
-        padding: 0 6px;
+        font-size: 12px;
+        min-width: 50px;
     }
     
     footer p {
@@ -747,104 +804,65 @@ main {
 
 /* Responsive design for sidebar */
 @media (max-width: 1200px) and (min-width: 769px) {
-    main {
-        flex-direction: column;
-        align-items: center;
-        height: auto;
+    /* Sidebar remains toggleable on tablets */
+    .history-sidebar-overlay {
+        width: 300px;
+        right: -300px;
     }
     
-    #history-sidebar {
-        position: relative;
-        order: 2;
-        width: 100%;
-        max-width: 600px;
-        height: 300px;
-        margin-top: 20px;
-        left: auto;
-        top: auto;
-        transform: none;
-    }
-    
-    #game-area {
-        order: 1;
-        position: relative;
-        left: auto;
-        top: auto;
-        transform: none;
-        width: 100%;
-        padding: 20px 0;
-    }
-    
-    #history-container {
-        flex-direction: row;
-        overflow-x: auto;
-        overflow-y: hidden;
-        gap: 10px;
-        padding-bottom: 10px;
-    }
-    
-    .game-snapshot {
-        min-width: 120px;
-        flex-shrink: 0;
+    .history-sidebar-content {
+        width: 250px;
     }
 }
 
 @media (max-width: 768px) {
     body {
         overflow: hidden; /* Prevent page scrolling */
+        overflow-x: hidden; /* Explicitly prevent horizontal scrolling */
     }
-    
-    main {
+      main {
         height: calc(100vh - 80px);
         overflow: hidden;
         flex-direction: column;
         align-items: center;
-        gap: 10px;
+        gap: 0px;
         padding: 0 10px;
-    }
-    
-    #history-sidebar {
-        position: relative;
-        order: 2;
         width: 100%;
-        max-width: 100%;
-        height: 120px;
-        margin-top: 0;
-        left: auto;
-        top: auto;
-        transform: none;
-        padding: 8px;
+        max-width: 100vw;
+        box-sizing: border-box;
+    }    /* Mobile sidebar adjustments */
+    .history-sidebar-overlay {
+        width: 100%;
+        right: -100%;
     }
     
-    #history-sidebar h3 {
-        font-size: 11px;
-        margin-bottom: 6px;
-        padding-bottom: 4px;
+    .history-sidebar-content {
+        width: 80%;
+        max-width: 300px;
+        margin-left: auto;
     }
     
-    #history-container {
-        height: calc(100% - 25px);
-        flex-direction: row;
-        overflow-x: auto;
-        overflow-y: hidden;
-        gap: 8px;
-        padding-bottom: 5px;
-    }
-    
-    #game-area {
+    .history-toggle-btn {
+        right: 15px;
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }#game-area {
         order: 1;
         position: relative;
         left: auto;
         top: auto;
         transform: none;
         flex: 1;
-        padding: 10px;
+        padding: 5px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
         overflow: hidden;
         width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .game-snapshot {
@@ -879,110 +897,110 @@ main {
 }
 
 @media (max-width: 480px) {
+    body {
+        padding: 0;
+        margin: 0;
+        overflow-x: hidden;
+    }
+      main {
+        padding: 0 5px;
+        gap: 0px;
+        width: 100%;
+        max-width: 100vw;
+    }
+    
     header h1 {
         font-size: 20px;
+    }    #game-area {
+        padding: 3px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
-    
-    #game-area {
-        padding: 5px;
-    }
-    
-    #game-board {
-        padding: 8px;
-        margin-bottom: 10px;
+      #game-board {
+        padding: 10px;
+        margin-bottom: 12px;
     }
     
     .row {
-        grid-template-columns: repeat(5, 32px);
+        grid-template-columns: repeat(5, 40px);
         gap: 3px;
     }
     
     .cell {
-        width: 32px;
-        height: 32px;
-        font-size: 16px;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
         border-radius: 6px;
     }
     
     #message-area {
-        font-size: 12px;
-        margin-bottom: 10px;
-        min-height: 16px;
-    }
-    
-    #keyboard-container {
-        padding: 8px;
-        gap: 3px;
-        margin-bottom: 8px;
+        font-size: 14px;
+        margin-bottom: 12px;
+        min-height: 18px;
+    }    #keyboard-container {
+        padding: 10px;
+        gap: 4px;
+        margin-bottom: 0px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
     
     .keyboard-row {
-        gap: 2px;
+        gap: 3px;
     }
     
     .key {
-        height: 32px;
-        font-size: 11px;
-        min-width: 22px;
-        border-radius: 4px;
+        height: 40px;
+        font-size: 13px;
+        min-width: 26px;
+        border-radius: 5px;
     }
     
     .key.special {
-        font-size: 9px;
-        min-width: 35px;
-    }
-    
-    #genre-selection {
-        margin-bottom: 10px;
-        gap: 6px;
+        font-size: 11px;
+        min-width: 45px;
+    }      #genre-selection {
+        margin-bottom: 12px;
+        gap: 8px;
     }
     
     .genre-btn {
-        padding: 5px 10px;
-        font-size: 11px;
+        padding: 6px 14px;
+        font-size: 13px;
         border-radius: 6px;
     }
-    
-    footer p {
+      footer p {
         font-size: 11px;
         margin: 3px 0;
     }
     
-    #history-sidebar {
-        height: 100px;
-        padding: 6px;
+    .history-toggle-btn {
+        right: 10px;
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
     }
-    
-    #history-sidebar h3 {
-        font-size: 10px;
-        margin-bottom: 4px;
-    }
-    
-    #history-container {
-        height: calc(100% - 20px);
-    }
-    
-    .game-snapshot {
-        min-width: 80px;
-        padding: 3px;
-    }
-    
-    .snapshot-cell {
-        width: 10px;
-        height: 10px;
-    }
-    
-    .snapshot-header {
-        font-size: 8px;
-    }
-    
-    .snapshot-genre {
-        font-size: 7px;
-    }
-    
-    .snapshot-result {
-        font-size: 7px;
-    }
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: transparent;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 5;
+    pointer-events: none; /* Allow clicks to pass through to content below */
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+    color: #8e8e93;
+    opacity: 0.8;
 }
 
 /* Screen shake animation for invalid words */
