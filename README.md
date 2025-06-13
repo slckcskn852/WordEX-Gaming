@@ -1,5 +1,7 @@
 # 🎮 WordEX Gaming - A Gaming-Themed Wordle Clone
 
+🌐 **[Play Now at https://wordex.free.nf/](https://wordex.free.nf/)** 🌐
+
 A modern, responsive Wordle-style word guessing game featuring gaming themes from **Dark Souls** and **Final Fantasy** series. Built with vanilla HTML, CSS, and JavaScript.
 
 ## ✨ Features
