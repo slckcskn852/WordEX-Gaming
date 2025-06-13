@@ -2,8 +2,6 @@
 
 A modern, responsive Wordle-style word guessing game featuring gaming themes from **Dark Souls** and **Final Fantasy** series. Built with vanilla HTML, CSS, and JavaScript.
 
-![WordEX Gaming Screenshot](https://via.placeholder.com/800x600/007aff/ffffff?text=WordEX+Gaming)
-
 ## ✨ Features
 
 ### 🎯 **Core Gameplay**
@@ -153,58 +151,6 @@ wordex-gaming/
 - Modular functions for easy modification
 - Well-commented code for maintainability
 
-## 🎨 Design Philosophy
-
-### Visual Design
-- **Minimalist**: Clean, distraction-free interface
-- **Accessible**: High contrast, readable fonts
-- **Responsive**: Seamless experience across devices
-- **Gaming-Inspired**: Subtle nods to gaming aesthetics
-
-### User Experience
-- **Intuitive**: Familiar Wordle mechanics
-- **Engaging**: Smooth animations and feedback
-- **Forgiving**: Clear error messages and auto-correction
-- **Rewarding**: Satisfying visual and audio cues
-
-## 🔧 Technical Details
-
-### Performance
-- Lazy loading of word lists
-- Efficient DOM manipulation
-- CSS animations over JavaScript
-- Minimal memory footprint
-
-### Compatibility
-- **Browsers**: Chrome 60+, Firefox 55+, Safari 12+, Edge 79+
-- **Devices**: Desktop, tablet, mobile
-- **Input**: Mouse, touch, keyboard
-
-### File Sizes
-- **HTML**: ~1KB
-- **CSS**: ~15KB
-- **JavaScript**: ~8KB
-- **Word Lists**: ~50KB total
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our contributing guidelines:
-
-### Getting Started
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Areas for Contribution
-- 🎮 New gaming word lists
-- 🎨 UI/UX improvements
-- 🔧 Performance optimizations
-- 🐛 Bug fixes
-- 📚 Documentation improvements
-- 🌐 Internationalization
-
 ## 📝 Word List Sources
 
 ### Dark Souls Series
@@ -222,10 +168,6 @@ We welcome contributions! Please see our contributing guidelines:
 - Common English 5-letter words
 - Sourced from standard word lists
 - Filtered for appropriate content
-
-## 🐛 Known Issues
-
-- None currently! 🎉
 
 ## 📈 Future Enhancements
 
@@ -249,15 +191,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Square Enix** for Final Fantasy universe
 - Gaming communities for word suggestions and feedback
 
-## 📞 Contact
-
-- **Author**: Your Name
-- **Email**: your.email@example.com
-- **GitHub**: [@yourusername](https://github.com/yourusername)
-- **Project Link**: [https://github.com/yourusername/wordex-gaming](https://github.com/yourusername/wordex-gaming)
-
----
-
-⭐ **Star this repo** if you enjoyed playing WordEX Gaming!
 
 🎮 **Happy Gaming and Word Guessing!** 🎮
