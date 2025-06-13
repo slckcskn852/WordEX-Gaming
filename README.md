@@ -2,8 +2,6 @@
 
 A modern, responsive Wordle-style word guessing game featuring gaming themes from **Dark Souls** and **Final Fantasy** series. Built with vanilla HTML, CSS, and JavaScript.
 
-![WordEX Gaming Screenshot](https://via.placeholder.com/800x600/007aff/ffffff?text=WordEX+Gaming)
-
 ## ✨ Features
 
 ### 🎯 **Core Gameplay**
