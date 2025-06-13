@@ -4,14 +4,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     window.wordexGameInitialized = true;
-    
-    const gameBoard = document.getElementById('game-board');
+      const gameBoard = document.getElementById('game-board');
     const keyboardContainer = document.getElementById('keyboard-container');
-    const messageArea = document.getElementById('message-area');// Word lists will be loaded from JSON files
+    const messageArea = document.getElementById('message-area');
+    const historyContainer = document.getElementById('history-container');
+    
+    // Word lists will be loaded from JSON files
     let soulsWordList = [];
     let finalFantasyWordList = [];
     let validGuesses = [];
     let currentGenre = 'souls'; // Default genre
+    let gameHistory = JSON.parse(localStorage.getItem('wordex-history') || '[]'); // Load saved history
     
     // Load words from JSON files
     async function loadWords() {
@@ -62,13 +65,14 @@ document.addEventListener('DOMContentLoaded', () => {
         createKeyboard();
         currentRow = 0;
         currentCol = 0;
-        guesses = Array(ROWS).fill(null).map(() => Array(COLS).fill(''));
-        updateBoard();
+        guesses = Array(ROWS).fill(null).map(() => Array(COLS).fill(''));        updateBoard();
         messageArea.textContent = '';
         // Reset keyboard colors
         document.querySelectorAll('.key').forEach(key => {
             key.classList.remove('correct', 'present', 'absent');
         });
+        // Update history display
+        updateHistoryDisplay();
     }function createBoard() {
         // Clear any existing board content
         gameBoard.innerHTML = '';
@@ -181,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 showMessage("Congratulations! You guessed it!");
                 highlightKeyboard(guess, guessResult);
                 currentRow = ROWS; // End game
+                saveGameSnapshot(true, currentRow); // Save winning snapshot
                 setTimeout(() => initializeGame(), 3000); // Restart after 3 seconds
                 return;
             }
@@ -191,6 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (currentRow === ROWS) {
                 showMessage(`Game Over! The word was ${targetWord}`);
+                saveGameSnapshot(false, currentRow); // Save losing snapshot
                 setTimeout(() => initializeGame(), 5000); // Restart after 5 seconds
             }
         }, totalAnimationTime);
@@ -373,5 +379,91 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             document.body.classList.remove('shake-screen');
         }, 600);
+    }
+    
+    // Game History Functions
+    function saveGameSnapshot(won, guessesUsed) {
+        const snapshot = {
+            id: Date.now(),
+            date: new Date().toLocaleDateString(),
+            genre: currentGenre,
+            won: won,
+            guessesUsed: guessesUsed,
+            board: guesses.slice(0, guessesUsed).map(row => 
+                row.map((letter, index) => {
+                    if (!letter) return 'empty';
+                    const targetLetter = targetWord[index];
+                    if (letter === targetLetter) return 'correct';
+                    if (targetWord.includes(letter)) return 'present';
+                    return 'absent';
+                })
+            )
+        };
+        
+        gameHistory.unshift(snapshot); // Add to beginning
+        if (gameHistory.length > 20) { // Keep only last 20 games
+            gameHistory = gameHistory.slice(0, 20);
+        }
+        
+        localStorage.setItem('wordex-history', JSON.stringify(gameHistory));
+        updateHistoryDisplay();
+    }
+
+    function updateHistoryDisplay() {
+        if (!historyContainer) return;
+        
+        historyContainer.innerHTML = '';
+        
+        if (gameHistory.length === 0) {
+            historyContainer.innerHTML = '<p style="text-align: center; color: #6b7280; font-size: 12px; margin-top: 20px;">No games played yet</p>';
+            return;
+        }
+        
+        gameHistory.forEach(game => {
+            const snapshotEl = document.createElement('div');
+            snapshotEl.className = 'game-snapshot';
+            
+            const headerEl = document.createElement('div');
+            headerEl.className = 'snapshot-header';
+            
+            const genreEl = document.createElement('span');
+            genreEl.className = `snapshot-genre ${game.genre}`;
+            genreEl.textContent = game.genre === 'souls' ? 'DS' : 'FF';
+            
+            const resultEl = document.createElement('span');
+            resultEl.className = `snapshot-result ${game.won ? 'won' : 'lost'}`;
+            resultEl.textContent = game.won ? `${game.guessesUsed}/6` : 'X/6';
+            
+            headerEl.appendChild(genreEl);
+            headerEl.appendChild(resultEl);
+            
+            const boardEl = document.createElement('div');
+            boardEl.className = 'snapshot-board';
+            
+            // Create 6 rows (fill empty rows if game ended early)
+            for (let i = 0; i < 6; i++) {
+                const rowEl = document.createElement('div');
+                rowEl.className = 'snapshot-row';
+                
+                for (let j = 0; j < 5; j++) {
+                    const cellEl = document.createElement('div');
+                    cellEl.className = 'snapshot-cell';
+                    
+                    if (i < game.board.length && j < game.board[i].length) {
+                        cellEl.classList.add(game.board[i][j]);
+                    } else {
+                        cellEl.classList.add('empty');
+                    }
+                    
+                    rowEl.appendChild(cellEl);
+                }
+                
+                boardEl.appendChild(rowEl);
+            }
+            
+            snapshotEl.appendChild(headerEl);
+            snapshotEl.appendChild(boardEl);
+            historyContainer.appendChild(snapshotEl);
+        });
     }
 });

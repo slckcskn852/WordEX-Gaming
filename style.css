@@ -3,16 +3,25 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 100vh;
     margin: 0;
     background-color: #f0f2f5; /* Softer background */
     color: #1c1c1e; /* Darker text for better contrast */
 }
 
+header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    position: relative;
+    z-index: 10;
+}
+
 header h1 {
     color: #1c1c1e;
-    margin-bottom: 25px; /* Increased margin */
+    margin: 0;
     font-weight: 600; /* Slightly bolder */
 }
 
@@ -240,6 +249,168 @@ header h1 {
 .genre-btn.active:hover {
     background-color: #0056cc;
     border-color: #0056cc;
+}
+
+/* Main layout with sidebar */
+main {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 80px); /* Account for header height */
+    max-width: 1400px;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0 20px;
+    position: relative;
+}
+
+/* History Sidebar */
+#history-sidebar {
+    width: 180px;
+    min-width: 180px;
+    background-color: #ffffff;
+    border: 2px solid #d1d5db;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    height: calc(100vh - 140px);
+    position: absolute;
+    left: 20px;
+    top: 20px;
+}
+
+#history-sidebar h3 {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1c1c1e;
+    text-align: center;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+#history-container {
+    overflow-y: auto;
+    height: calc(100% - 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Game snapshot styles */
+.game-snapshot {
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 9px;
+}
+
+.snapshot-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+    font-size: 10px;
+    color: #6b7280;
+}
+
+.snapshot-genre {
+    font-weight: 600;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 8px;
+}
+
+.snapshot-genre.souls {
+    background-color: #ef4444;
+    color: white;
+}
+
+.snapshot-genre.ff {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.snapshot-result {
+    font-weight: 600;
+    font-size: 8px;
+}
+
+.snapshot-result.won {
+    color: #10b981;
+}
+
+.snapshot-result.lost {
+    color: #ef4444;
+}
+
+.snapshot-board {
+    display: grid;
+    grid-template-rows: repeat(6, auto);
+    gap: 1px;
+    background-color: #ffffff;
+    border: 1px solid #000000;
+    border-radius: 3px;
+    padding: 3px;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.snapshot-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+}
+
+.snapshot-cell {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 2px;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 0; /* Hide any text content */
+}
+
+.snapshot-cell.correct {
+    background-color: #10b981;
+    border-color: #10b981;
+}
+
+.snapshot-cell.present {
+    background-color: #f59e0b;
+    border-color: #f59e0b;
+}
+
+.snapshot-cell.absent {
+    background-color: #6b7280;
+    border-color: #6b7280;
+}
+
+.snapshot-cell.empty {
+    background-color: #f3f4f6;
+    border-color: #e5e7eb;
+}
+
+/* Game Area */
+#game-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    padding: 20px;
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
 }
 
 /* Responsive Design - Mobile First */
@@ -571,6 +742,246 @@ header h1 {
     
     footer p {
         font-size: 11px;
+    }
+}
+
+/* Responsive design for sidebar */
+@media (max-width: 1200px) and (min-width: 769px) {
+    main {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+    }
+    
+    #history-sidebar {
+        position: relative;
+        order: 2;
+        width: 100%;
+        max-width: 600px;
+        height: 300px;
+        margin-top: 20px;
+        left: auto;
+        top: auto;
+        transform: none;
+    }
+    
+    #game-area {
+        order: 1;
+        position: relative;
+        left: auto;
+        top: auto;
+        transform: none;
+        width: 100%;
+        padding: 20px 0;
+    }
+    
+    #history-container {
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 10px;
+        padding-bottom: 10px;
+    }
+    
+    .game-snapshot {
+        min-width: 120px;
+        flex-shrink: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        overflow: hidden; /* Prevent page scrolling */
+    }
+    
+    main {
+        height: calc(100vh - 80px);
+        overflow: hidden;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 0 10px;
+    }
+    
+    #history-sidebar {
+        position: relative;
+        order: 2;
+        width: 100%;
+        max-width: 100%;
+        height: 120px;
+        margin-top: 0;
+        left: auto;
+        top: auto;
+        transform: none;
+        padding: 8px;
+    }
+    
+    #history-sidebar h3 {
+        font-size: 11px;
+        margin-bottom: 6px;
+        padding-bottom: 4px;
+    }
+    
+    #history-container {
+        height: calc(100% - 25px);
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 8px;
+        padding-bottom: 5px;
+    }
+    
+    #game-area {
+        order: 1;
+        position: relative;
+        left: auto;
+        top: auto;
+        transform: none;
+        flex: 1;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        width: 100%;
+    }
+    
+    .game-snapshot {
+        min-width: 90px;
+        width: auto;
+        padding: 4px;
+        flex-shrink: 0;
+    }
+    
+    .snapshot-board {
+        padding: 2px;
+    }
+    
+    .snapshot-cell {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .snapshot-header {
+        margin-bottom: 4px;
+        font-size: 9px;
+    }
+    
+    .snapshot-genre {
+        font-size: 8px;
+        padding: 1px 3px;
+    }
+    
+    .snapshot-result {
+        font-size: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 20px;
+    }
+    
+    #game-area {
+        padding: 5px;
+    }
+    
+    #game-board {
+        padding: 8px;
+        margin-bottom: 10px;
+    }
+    
+    .row {
+        grid-template-columns: repeat(5, 32px);
+        gap: 3px;
+    }
+    
+    .cell {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+        border-radius: 6px;
+    }
+    
+    #message-area {
+        font-size: 12px;
+        margin-bottom: 10px;
+        min-height: 16px;
+    }
+    
+    #keyboard-container {
+        padding: 8px;
+        gap: 3px;
+        margin-bottom: 8px;
+    }
+    
+    .keyboard-row {
+        gap: 2px;
+    }
+    
+    .key {
+        height: 32px;
+        font-size: 11px;
+        min-width: 22px;
+        border-radius: 4px;
+    }
+    
+    .key.special {
+        font-size: 9px;
+        min-width: 35px;
+    }
+    
+    #genre-selection {
+        margin-bottom: 10px;
+        gap: 6px;
+    }
+    
+    .genre-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+        border-radius: 6px;
+    }
+    
+    footer p {
+        font-size: 11px;
+        margin: 3px 0;
+    }
+    
+    #history-sidebar {
+        height: 100px;
+        padding: 6px;
+    }
+    
+    #history-sidebar h3 {
+        font-size: 10px;
+        margin-bottom: 4px;
+    }
+    
+    #history-container {
+        height: calc(100% - 20px);
+    }
+    
+    .game-snapshot {
+        min-width: 80px;
+        padding: 3px;
+    }
+    
+    .snapshot-cell {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .snapshot-header {
+        font-size: 8px;
+    }
+    
+    .snapshot-genre {
+        font-size: 7px;
+    }
+    
+    .snapshot-result {
+        font-size: 7px;
     }
 }
 

@@ -13,6 +13,7 @@ A modern, responsive Wordle-style word guessing game featuring gaming themes fro
   - 🟡 **Yellow**: Correct letter in wrong position
   - ⚫ **Gray**: Letter not in the word
 - Physical and on-screen keyboard support
+- **Strong invalid word feedback** with screen shake and row clearing
 
 ### 🎮 **Gaming Themes**
 - **Dark Souls**: Words from Demon's Souls, Dark Souls, Bloodborne, Sekiro, and Elden Ring
@@ -20,14 +21,22 @@ A modern, responsive Wordle-style word guessing game featuring gaming themes fro
 - Easy genre switching with dedicated buttons
 - 180+ curated gaming words (80 Souls + 100 Final Fantasy)
 
+### 📊 **Game History & Analytics**
+- **Visual game snapshots**: Color-coded mini boards showing past game patterns
+- **Persistent history**: Saves up to 20 recent games locally
+- **Performance tracking**: Win/loss indicators and guess count display
+- **Genre tracking**: Shows which theme was used for each game
+- **Wordle-style sharing**: Pattern displays without revealing letters
+
 ### 📱 **Responsive Design**
 - **Mobile-first** approach with optimized layouts
+- **App-like experience**: No scrolling on mobile, everything fits on screen
 - Adaptive sizing for all screen sizes:
-  - 📱 Small phones (≤480px)
-  - 📱 Mobile (≤768px)
-  - 📟 Tablet (769px-1024px)
-  - 💻 Desktop (1025px-1439px)
-  - 🖥️ Large Desktop (≥1440px)
+  - 📱 Small phones (≤480px) - Compact layout with bottom history bar
+  - 📱 Mobile (≤768px) - Streamlined interface, horizontal history scrolling
+  - 📟 Tablet (769px-1024px) - Balanced layout with expanded history
+  - 💻 Desktop (1025px-1439px) - Left sidebar with full game history
+  - 🖥️ Large Desktop (≥1440px) - Spacious layout with detailed history
 
 ### 🎨 **Modern UI/UX**
 - Clean, Apple-inspired design language
@@ -38,14 +47,17 @@ A modern, responsive Wordle-style word guessing game featuring gaming themes fro
   - Automatic clearing of invalid entries
   - Visual row shake effect
 - Centered message area for clear communication
+- **Game history sidebar** with miniature game boards
 - Visual feedback for all interactions
 
 ### 🔧 **Technical Features**
 - Modular JSON-based word lists
 - Async word loading with error handling
+- **Local storage** for game history persistence
+- **Social media optimization** with Open Graph tags
 - No external dependencies
-- Optimized performance
-- Cross-browser compatibility
+- Optimized performance and cross-browser compatibility
+- **Duplicate rendering protection** for hosted environments
 
 ## 🚀 Quick Start
 
@@ -91,12 +103,13 @@ A modern, responsive Wordle-style word guessing game featuring gaming themes fro
 
 ```
 wordex-gaming/
-├── 📄 index.html              # Main HTML structure
-├── 🎨 style.css               # Responsive CSS styling
-├── ⚡ script.js               # Game logic and interactions
+├── 📄 index.html              # Main HTML structure with social meta tags
+├── 🎨 style.css               # Responsive CSS with history sidebar
+├── ⚡ script.js               # Game logic with history tracking
 ├── 📊 words.json              # 5,762 valid English words
 ├── 🗡️ souls-words.json        # 80 Dark Souls themed words
 ├── ⚔️ final-fantasy-words.json # 100 Final Fantasy themed words
+├── 🖼️ wordex.png              # Game logo for social sharing
 └── 📖 README.md               # This file
 ```
 
@@ -107,6 +120,7 @@ wordex-gaming/
 3. **Submit**: Press Enter to submit your guess
 4. **Analyze Feedback**: Use color hints to refine your next guess
 5. **Win or Learn**: Guess the word in 6 tries or see the answer!
+6. **Track Progress**: View your game history in the sidebar (desktop) or bottom bar (mobile)
 
 ### 🎯 **Valid Guesses**
 - Any 5-letter English word from the dictionary (~5,762 words)
@@ -115,6 +129,13 @@ wordex-gaming/
 ### 🏆 **Target Words**
 - **Dark Souls Mode**: Only Souls-series themed words
 - **Final Fantasy Mode**: Only Final Fantasy themed words
+
+### 📊 **Game History**
+- **Desktop**: Left sidebar shows detailed game snapshots
+- **Mobile**: Bottom bar with horizontal scrolling history
+- **Color patterns**: Mini boards show your guess patterns without letters
+- **Performance tracking**: Win/loss ratios and guess counts
+- **Persistent storage**: History saved locally across sessions
 
 ## 🛠️ Customization
 
@@ -174,13 +195,15 @@ wordex-gaming/
 ## 📈 Future Enhancements
 
 - [ ] 🔊 Sound effects and music
-- [ ] 📊 Statistics tracking
-- [ ] 🏆 Achievement system
+- [ ] 📊 Advanced statistics and streaks
+- [ ] 🏆 Achievement system with gaming-themed badges
 - [ ] 🌙 Dark mode toggle
-- [ ] 🎮 More gaming genres
-- [ ] 💾 Local storage for progress
-- [ ] 📱 PWA support
-- [ ] 🌐 Multiplayer mode
+- [ ] 🎮 More gaming genres (Zelda, Pokemon, etc.)
+- [ ] � PWA support for app-like installation
+- [ ] 🌐 Multiplayer mode and challenges
+- [ ] � Cloud sync for game history
+- [ ] � Hint system with gaming lore
+- [ ] 📤 Enhanced social sharing with game patterns
 
 ## 📄 License
 
